@@ -72,13 +72,15 @@ void app_main()
     
    // // // /*     MIND A HÁRMAT ÉRINTŐ FÜGGVÉNYEK TESZTELÉSE
     senzor.init(true,true);
-    senzor.auto_calib_mag();
+    senzor.calib_offs_mag(18.0267,-1.8502,-39.7957);
+    //senzor.auto_calib_mag();
         while(1)
         {
             senzor.read_all();
             printf(" %f,%f,%f,", senzor.accel_data[0],senzor.accel_data[1],senzor.accel_data[2]);
             printf(" %f,%f,%f,", senzor.gyro_data[0],senzor.gyro_data[1],senzor.gyro_data[2]);
             printf(" %f,%f,%f\n", senzor.mag_data[0],senzor.mag_data[1],senzor.mag_data[2]);
+            vTaskDelay(50/portTICK_PERIOD_MS);
         }
     // // // */
 
