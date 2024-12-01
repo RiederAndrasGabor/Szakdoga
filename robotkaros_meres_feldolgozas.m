@@ -1,0 +1,53 @@
+fileID=fopen('data.txt','r');
+
+meres0 = readmatrix("data.txt");
+figure('Name', 'Mérési adatok');
+
+[m,n] = size(meres0);
+t=0.075;
+time= 1:m;
+for i=1:m
+    time(i)=t*i;
+end
+axis(1) = subplot(2,2,1);
+hold on;
+plot(time, meres0(:,1), 'r');
+plot(time, meres0(:,2), 'g');
+plot(time, meres0(:,3), 'b');
+legend('X', 'Y', 'Z');
+xlabel('Idő (s)');
+ylabel('Elmozdulás(mm)');
+title('X-Y-Z irányú elmozdulás');
+hold off;
+axis(2) = subplot(2,2,2);
+hold on;
+plot(time, meres0(:,4), 'r');
+plot(time, meres0(:,5), 'g');
+plot(time, meres0(:,6), 'b');
+legend('X', 'Y', 'Z');
+xlabel('Idő (s)');
+ylabel('Elmozdulás(mm)');
+title('A-B-C irányú elmozdulás');
+hold off;
+axis(3) = subplot(2,2,3);
+hold on;
+plot(time, meres0(:,7), 'r');
+plot(time, meres0(:,8), 'g');
+plot(time, meres0(:,9), 'b');
+legend('X', 'Y', 'Z');
+xlabel('Idő (s)');
+ylabel('Elmozdulás(mm)');
+title('A-B-C irányú elmozdulás');
+hold off;
+axis(4) = subplot(2,2,4);
+hold on;
+plot(time, meres0(:,10), 'r');
+plot(time, meres0(:,11), 'g');
+plot(time, meres0(:,12), 'b');
+legend('X', 'Y', 'Z');
+xlabel('Idő (s)');
+ylabel('Elmozdulás(mm)');
+title('A-B-C irányú elmozdulás');
+hold off;
+linkaxes(axis, 'x');
+fclose(fileID);

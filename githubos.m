@@ -126,9 +126,9 @@ pitch_pred=pitch_now+time*(pitch_rel-bias_t_prev(3));
 
 
 %kovariancia predikció, 1^2=giroszkóp eltérése
-yaw_covariance_predicted=yaw_covariance_current+(time^2*1^2);
-roll_covariance_predicted=roll_covariance_current+(time^2*1^2);
-pitch_covariance_predicted=pitch_covariance_current+(time^2*1^2);
+yaw_covariance_predicted=yaw_covariance_current+(time^2*0.9^2);
+roll_covariance_predicted=roll_covariance_current+(time^2*0.9^2);
+pitch_covariance_predicted=pitch_covariance_current+(time^2*0.9^2);
 
 
 %Kálmán erősítés számítása; kb 0.3 FOK HIBÁJA LEHET KB AZ ABSZ POZíCIÓ MÉRÉSNEK

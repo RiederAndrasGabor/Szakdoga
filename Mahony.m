@@ -31,22 +31,20 @@ classdef Mahony < handle
 
             if(norm(Magnetometer) == 0), return; end	% NaN esetére
             Magnetometer = Magnetometer / norm(Magnetometer);	
+            [q(1),q(2),q(3),q(4)] = parts(Q_former);
 
             % Magnetométer értékek tool keretbe helyezése
-            Q_mag=quaternion(0,Magnetometer(1),Magnetometer(2),Magnetometer(3));
-            h = quatmultiply(Q_former,Q_mag);
-            [h0,h1,h2,h3] = parts(h);
-            b2=norm([h1 h2]);
-            b = [0 b2 0 h3];
-            [q(1),q(2),q(3),q(4)] = parts(Q_former);
-            
+            h = quaternProd([q(1),q(2),q(3),q(4)], quaternProd([0 Magnetometer], quaternConj([q(1),q(2),q(3),q(4)])));
+            b2=norm([h(2) h(3)]);
+            b = [b2 0 0 h(4)];
             % Gravitációs és mágneses tér irányai
             v = [2*(q(2)*q(4) - q(1)*q(3))
                  2*(q(1)*q(2) + q(3)*q(4))
                  q(1)^2 - q(2)^2 - q(3)^2 + q(4)^2];
-            w = [2*b(2)*(0.5 - q(3)^2 - q(4)^2) + 2*b(4)*(q(2)*q(4) - q(1)*q(3))
-                 2*b(2)*(q(2)*q(3) - q(1)*q(4)) + 2*b(4)*(q(1)*q(2) + q(3)*q(4))
-                 2*b(2)*(q(1)*q(3) + q(2)*q(4)) + 2*b(4)*(0.5 - q(2)^2 - q(3)^2)]; 
+            w = [
+                2*b(2)*(0.5 - q(3)^2 - q(4)^2) + 2*b(4)*(q(2)*q(4) - q(1)*q(3))
+                2*b(2)*(q(2)*q(3) - q(1)*q(4)) + 2*b(4)*(q(1)*q(2) + q(3)*q(4))
+                2*b(2)*(q(1)*q(3) + q(2)*q(4)) + 2*b(4)*(0.5 - q(2)^2 - q(3)^2)]; 
  
             % A hiba értéke a prediktált és a mért értékek keresztszorzata
             e = cross(Accelerometer, v) + cross(Magnetometer, w); 
